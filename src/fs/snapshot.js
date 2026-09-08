@@ -5,12 +5,15 @@ import path from "node:path";
 const snapshot = async () => {
   const __dirname = import.meta.dirname;
 
-  const rootPath = path.resolve(__dirname, "../../workspace");
-  const files = await fs.readdir(rootPath, { recursive: true });
+  console.log("test", path.resolve(__dirname, "../../"));
+
+  const rootPath = path.resolve(__dirname, "../../");
+  const workspaceDir = path.resolve(rootPath, "workspace");
+  const files = await fs.readdir(workspaceDir, { recursive: true });
 
   const entries = [];
   for (const file of files) {
-    const filePath = path.resolve(rootPath, file);
+    const filePath = path.resolve(workspaceDir, file);
     const stat = await fs.stat(filePath);
 
     if (stat.isFile()) {
@@ -22,11 +25,12 @@ const snapshot = async () => {
   }
 
   const result = {
-    rootPath,
+    rootPath: workspaceDir,
     entries,
   };
 
-  await fs.writeFile("snapshot.json", JSON.stringify(result));
+  const snapshotFilePath = path.resolve(rootPath, "snapshot.json");
+  await fs.writeFile(snapshotFilePath, JSON.stringify(result));
 };
 
 await snapshot();
