@@ -5,8 +5,6 @@ import path from "node:path";
 const snapshot = async () => {
   const __dirname = import.meta.dirname;
 
-  console.log("test", path.resolve(__dirname, "../../"));
-
   const rootPath = path.resolve(__dirname, "../../");
   const workspaceDir = path.resolve(rootPath, "workspace");
   const files = await fs.readdir(workspaceDir, { recursive: true });
