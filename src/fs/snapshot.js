@@ -15,7 +15,7 @@ const snapshot = async () => {
     const stat = await fs.stat(filePath);
 
     if (stat.isFile()) {
-      const content = await fs.readFile(filePath, "utf-8");
+      const content = await fs.readFile(filePath, "base64");
       entries.push({ path: file, type: "file", size: stat.size, content });
     } else {
       entries.push({ path: file, type: "directory" });
